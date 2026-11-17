@@ -13,7 +13,7 @@ An end-to-end interactive Business Intelligence dashboard analyzing real estate 
 ---
 
 ## 📋 Dataset Scope & Coverage
-> **Data Disclaimer:** This project is built upon a **curated market sample of 157 publicly listed property units** extracted from the **Nawy** real estate platform. Because it represents a focused snapshot of available market offerings rather than TMG's complete internal historical sales records, findings reflect current market listings within this sample.
+> **Data Collection & Disclaimer:** This dataset was collected via **web scraping** from the **Nawy** real estate platform and represents a **curated market sample of 157 publicly listed property units** across Talaat Moustafa Group (TMG) developments. Because it captures a focused snapshot of available market offerings rather than TMG's complete internal historical sales records, findings reflect current public listings within this sample.
 
 ### **Included Data Attributes:**
 * **Developments & Geography:** Compound name (*Celia, Noor Capital Gardens, The Spine, Al Rabwa, Southmed, EDEN, Privado*) and City (*New Capital City, New Capital Gardens, New Cairo, 6th of October City, Al Dabaa - North Coast, Madinaty*).
@@ -23,15 +23,23 @@ An end-to-end interactive Business Intelligence dashboard analyzing real estate 
 
 ---
 
-## 🛠️ Technical Workflow
-1. **Data Cleaning & ETL (Power Query):**
-   * Standardized compound names, city labels, and property categories across all 157 records from Nawy.
-   * Resolved fragmented area attributes and formatted currency and numeric fields for accurate aggregation.
-2. **DAX Measures & KPI Modeling:**
-   * Built dynamic measures for `Total Units`, `Avg Unit Price`, `Avg Price Per sqm`, and `Cash Units %`.
-3. **Executive Visualization (Power BI):**
-   * Implemented multi-dimensional interactive slicers (*Compound, City, Property Type, Payment Type, and Payment Freq*) for granular filtering.
-   * Applied a custom SVG Bento Grid background with clean visual hierarchy and zero chart clutter.
+## 🧹 Data Cleaning & Transformation (Power Query)
+Raw scraped property listings required extensive preprocessing in **Power Query** before modeling:
+* **Schema & Noise Removal:** Dropped redundant web-scraping metadata, empty columns, and duplicate listing entries to retain 157 clean, unique property records.
+* **Text Parsing & Delimiter Splitting:** Extracted clean **Compound Names**, **Cities**, and **Property Types** from combined raw listing titles using delimiter splitting and text trimming.
+* **Handling Fragmented Area Columns:** Consolidated split built-up area fields (where unit sizes appeared across separate columns depending on property type) into a single unified `Area_sqm` numeric column using conditional logic, and removed obsolete source columns.
+* **Currency & Numeric Standardization:** Stripped text suffixes (e.g., `"EGP"`, `"m²"`, `"Years"`) and commas from price, area, and installment fields, casting all metrics into proper `Decimal Number` and `Whole Number` data types.
+* **Standardizing Categorical Values:** Normalized inconsistent labels across `Sale_Type` (*Developer Sale* vs. *Resale*), `Payment_Type` (*Cash* vs. *Installments*), and `Payment_Freq` (*Monthly*, *Quarterly*, etc.), while handling `null` values for cash-only units.
+* **Calculated Feature Engineering:** Created a clean `Price_per_sqm` column (`Price_EGP / Area_sqm`) to enable standardized valuation comparisons across different unit sizes and compounds.
+
+---
+
+## 📐 DAX Modeling & Visualization (Power BI)
+1. **DAX Measures & KPIs:**
+   * Engineered dynamic measures for `Total Units`, `Avg Unit Price`, `Avg Price Per sqm`, and `Cash Units %` to respond seamlessly to user filters.
+2. **Executive Dashboard Design:**
+   * Built a custom SVG **Bento Grid** layout aligned with TMG’s official color palette (`#003560` & `#B8982B`) and clean visual hierarchy.
+   * Integrated five interactive slicers (*Compound, City, Property Type, Payment Type, and Payment Freq*) for multi-dimensional market exploration.
 
 ---
 
@@ -55,4 +63,4 @@ An end-to-end interactive Business Intelligence dashboard analyzing real estate 
 
 ## 👤 Author
 **Yahia Farag** — Data Analyst  
-*Tools: Power BI · SQL · Power Query · DAX · Excel*
+*Tools: Power BI · Power Query · DAX · Excel*
