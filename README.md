@@ -10,6 +10,10 @@ An end-to-end interactive Business Intelligence dashboard analyzing real estate 
 
 ![TMG Real Estate Portfolio Dashboard](Talaat_Moustafa_Real_Estate.png)
 
+## 🔗 Live Interactive Dashboard
+
+[View the Live Dashboard Here](YOUR_POWER_BI_LINK_HERE)
+
 ---
 
 ## 📋 Dataset Scope & Coverage
